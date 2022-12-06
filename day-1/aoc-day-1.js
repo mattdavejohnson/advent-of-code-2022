@@ -9,7 +9,7 @@ function readInputFile(file) {
   return results;
 }
 
-function elfWithMostCalories(arrOfCalories) {
+function splitElves(arrOfCalories) {
   let total = 0;
   let results = [];
 
@@ -26,15 +26,31 @@ function elfWithMostCalories(arrOfCalories) {
     }
   });
 
-  return findGreatestIndex(results) + 1;
+  return results;
 }
 
 function findGreatestIndex(arr) {
   let greatest = Math.max(...arr);
 
-  return arr.indexOf(greatest);
+  return arr.indexOf(greatest) + 1;
+}
+
+function findGreatestAmount(arr) {
+  return Math.max(...arr);
+}
+
+function findTopThreeAmount(arr) {
+  let sortedArr = arr.sort((a, b) => b - a);
+  let topThree = sortedArr.slice(0, 3);
+
+  return topThree.reduce((prev, curr) => prev + curr);
 }
 
 let readFile = readInputFile('./calories.txt');
+let elvesArray = splitElves(readFile);
+let mostCalories = findGreatestAmount(elvesArray);
+let indexOfElf = findGreatestIndex(elvesArray);
 
-console.log(`Elf with the most calories: ${elfWithMostCalories(readFile)}`);
+console.log(`Elf with the most calories: ${indexOfElf}`);
+console.log(`Amount of calories: ${mostCalories}`);
+console.log(`Top three calories: ${findTopThreeAmount(elvesArray)}`);
