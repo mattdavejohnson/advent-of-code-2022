@@ -1,12 +1,21 @@
 // Identify which elf has the most calories
 
+const fs = require('fs');
+
+function readInputFile(file) {
+  let input = fs.readFileSync(file, 'utf-8');
+  let results = input.split(/\r?\n/);
+
+  return results;
+}
+
 function elfWithMostCalories(arrOfCalories) {
   let total = 0;
   let results = [];
 
   arrOfCalories.forEach((entry, index) => {
     if (entry) {
-      total += entry;
+      total += Number(entry);
     } else {
       results.push(total);
       total = 0;
@@ -26,21 +35,6 @@ function findGreatestIndex(arr) {
   return arr.indexOf(greatest);
 }
 
-const calories = [
-  1000,
-  2000,
-  3000,
-  '',
-  4000,
-  '',
-  5000,
-  6000,
-  '',
-  7000,
-  8000,
-  9000,
-  '',
-  10000,
-];
+let readFile = readInputFile('./calories.txt');
 
-console.log(`Elf with the most calories: ${elfWithMostCalories(calories)}`);
+console.log(`Elf with the most calories: ${elfWithMostCalories(readFile)}`);
