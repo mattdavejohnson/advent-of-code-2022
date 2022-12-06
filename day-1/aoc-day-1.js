@@ -29,7 +29,7 @@ function splitElves(arrOfCalories) {
   return results;
 }
 
-function findGreatestIndex(arr) {
+function findGreatestElfIndex(arr) {
   let greatest = Math.max(...arr);
 
   return arr.indexOf(greatest) + 1;
@@ -49,8 +49,9 @@ function findTopThreeAmount(arr) {
 let readFile = readInputFile('./calories.txt');
 let elvesArray = splitElves(readFile);
 let mostCalories = findGreatestAmount(elvesArray);
-let indexOfElf = findGreatestIndex(elvesArray);
+let indexOfElf = findGreatestElfIndex(elvesArray);
+let topThree = findTopThreeAmount(elvesArray);
 
 console.log(`Elf with the most calories: ${indexOfElf}`);
 console.log(`Amount of calories: ${mostCalories}`);
-console.log(`Top three calories: ${findTopThreeAmount(elvesArray)}`);
+console.log(`Top three calories: ${topThree}`);
