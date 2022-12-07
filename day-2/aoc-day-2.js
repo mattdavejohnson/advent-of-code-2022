@@ -29,11 +29,20 @@ const OUTCOME = {
   CZ: 'draw',
 };
 
-// let data = [
-//   ['A', 'Y'],
-//   ['B', 'X'],
-//   ['C', 'Z'],
-// ];
+const WHAT_TO_CHOOSE = {
+  X: 'lose',
+  Y: 'draw',
+  Z: 'win',
+  Awin: 'AY',
+  Adraw: 'AX',
+  Alose: 'AZ',
+  Bwin: 'BZ',
+  Bdraw: 'BY',
+  Blose: 'BX',
+  Cwin: 'CX',
+  Cdraw: 'CZ',
+  Close: 'CY',
+};
 
 function formatData(arr) {
   let results = [];
@@ -55,9 +64,9 @@ function singleGameScore(result, move) {
 }
 
 function totalGameScore(movesArr) {
-  let scores = movesArr.map((arr) => {
-    let opponentMove = arr[0];
-    let playerMove = arr[1];
+  let scores = movesArr.map((el) => {
+    let opponentMove = el[0];
+    let playerMove = el[1];
     let outcome = playerResult(opponentMove, playerMove);
     let score = singleGameScore(outcome, playerMove);
 
@@ -71,8 +80,24 @@ function totalGameScore(movesArr) {
   return finalScore;
 }
 
+function chooseCorrectMove(movesArr) {
+  let scores = movesArr.map((arr) => {
+    let opponentMove = arr[0];
+    let playerDecision = WHAT_TO_CHOOSE[arr[1]];
+    let playerMove = WHAT_TO_CHOOSE[opponentMove + playerDecision];
+
+    return playerMove;
+  });
+
+  return scores;
+}
+
 let inputData = fs.readFileSync('./rounds.txt', 'utf-8').split('\n');
 let formattedInput = formatData(inputData);
-let finalScore = totalGameScore(formattedInput);
+let finalOriginalScore = totalGameScore(formattedInput);
 
-console.log(finalScore);
+let updatedMovesList = chooseCorrectMove(formattedInput);
+let finalUpdatedScore = totalGameScore(updatedMovesList);
+
+console.log(finalOriginalScore);
+console.log(finalUpdatedScore);
